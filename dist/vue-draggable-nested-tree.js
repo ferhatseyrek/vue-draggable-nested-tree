@@ -1,5 +1,5 @@
 /*!
- * vue-draggable-nested-tree v2.2.18
+ * vue-draggable-nested-tree v2.2.20
  * (c) 2018-present phphe <phphe@outlook.com>
  * Released under the MIT License.
  */
@@ -3567,21 +3567,11 @@
   }
 
   function isNodeDraggable(node) {
-    if (!draggableIds.hasOwnProperty(node._id)) {
-      var r;
-
-      if (node.hasOwnProperty('draggable')) {
-        r = node.draggable;
-      } else if (node.parent) {
-        r = isNodeDraggable(node.parent);
-      } else {
-        r = true;
-      }
-
-      draggableIds[node._id] = r;
+    if (node && node.draggable === false) {
+      return false;
     }
 
-    return draggableIds[node._id];
+    return true;
   }
   function isNodeDroppable(node) {
     if (!droppableIds.hasOwnProperty(node._id)) {
@@ -3737,7 +3727,6 @@
 
   var prevTree;
   var droppableIds = {};
-  var draggableIds = {}; // context is vm
 
   function autoMoveDragPlaceHolder(draggableHelperInfo) {
     var trees = this.store.trees;
@@ -4194,7 +4183,6 @@
   autoMoveDragPlaceHolder.dragEnd = function dragEnd() {
     prevTree = null;
     droppableIds = {};
-    draggableIds = {};
   };
 
   var script$2 = {
