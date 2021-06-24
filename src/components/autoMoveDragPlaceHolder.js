@@ -71,18 +71,10 @@ function insertDplhAfterTo(dplh, targetNode, info) {
 }
 
 export function isNodeDraggable(node) {
-  if (!draggableIds.hasOwnProperty(node._id)) {
-    let r
-    if (node.hasOwnProperty('draggable')) {
-      r = node.draggable
-    } else if (node.parent) {
-      r = isNodeDraggable(node.parent)
-    } else {
-      r = true
-    }
-    draggableIds[node._id] = r
+  if (node && node.draggable === false) {
+    return false;
   }
-  return draggableIds[node._id]
+  return true;
 }
 
 export function isNodeDroppable(node) {
