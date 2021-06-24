@@ -1,5 +1,5 @@
 /*!
- * vue-draggable-nested-tree v3.0.0-beta
+ * vue-draggable-nested-tree v3.0.0-beta2
  * (c) phphe <phphe@outlook.com> (https://github.com/phphe)
  * Released under the MIT License.
  */
@@ -38,14 +38,14 @@ var script = {
     },
 
     childrenVisible() {
-      var {
+      const {
         data
       } = this;
       return this.isRoot || data && data.children && data.children.length && data.open;
     },
 
     innerBackStyle() {
-      var r = {
+      const r = {
         marginBottom: this.store.space + 'px'
       };
 
@@ -79,7 +79,7 @@ var script = {
 };
 
 /* script */
-var __vue_script__ = script;
+const __vue_script__ = script;
 /* template */
 
 var __vue_render__ = function __vue_render__() {
@@ -96,19 +96,21 @@ var __vue_render__ = function __vue_render__() {
     attrs: {
       id: _vm.data._id
     }
-  }, [!_vm.isRoot ? _vm._t("node-inner-back", [_c("div", {
-    staticClass: "tree-node-inner-back",
-    class: [_vm.data.innerBackClass],
-    style: [_vm.innerBackStyle, _vm.data.innerBackStyle]
-  }, [_c("div", {
-    staticClass: "tree-node-inner",
-    class: [_vm.data.innerClass],
-    style: [_vm.data.innerStyle]
-  }, [_vm._t("default", null, {
-    data: _vm.data,
-    store: _vm.store,
-    vm: _vm.vm
-  })], 2)])], {
+  }, [!_vm.isRoot ? _vm._t("node-inner-back", function () {
+    return [_c("div", {
+      staticClass: "tree-node-inner-back",
+      class: [_vm.data.innerBackClass],
+      style: [_vm.innerBackStyle, _vm.data.innerBackStyle]
+    }, [_c("div", {
+      staticClass: "tree-node-inner",
+      class: [_vm.data.innerClass],
+      style: [_vm.data.innerStyle]
+    }, [_vm._t("default", null, {
+      data: _vm.data,
+      store: _vm.store,
+      vm: _vm.vm
+    })], 2)])];
+  }, {
     styleObj: _vm.innerBackStyle,
     data: _vm.data,
     store: _vm.store,
@@ -129,7 +131,7 @@ var __vue_render__ = function __vue_render__() {
       },
       scopedSlots: _vm._u([{
         key: "default",
-        fn: function fn(props) {
+        fn: function (props) {
           return [_vm._t("default", null, {
             data: props.data,
             store: props.store,
@@ -138,7 +140,7 @@ var __vue_render__ = function __vue_render__() {
         }
       }, {
         key: "node-inner-back",
-        fn: function fn(props) {
+        fn: function (props) {
           return _vm.store.customInnerBack ? [_vm._t("node-inner-back", null, {
             styleObj: props.styleObj,
             data: props.data,
@@ -155,23 +157,23 @@ var __vue_staticRenderFns__ = [];
 __vue_render__._withStripped = true;
 /* style */
 
-var __vue_inject_styles__ = undefined;
+const __vue_inject_styles__ = undefined;
 /* scoped */
 
-var __vue_scope_id__ = undefined;
+const __vue_scope_id__ = undefined;
 /* module identifier */
 
-var __vue_module_identifier__ = undefined;
+const __vue_module_identifier__ = undefined;
 /* functional template */
 
-var __vue_is_functional_template__ = false;
+const __vue_is_functional_template__ = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__ = __vue_normalize__({
+const __vue_component__ = /*#__PURE__*/__vue_normalize__({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
@@ -227,7 +229,7 @@ var script$1 = {
 
         this.rootData = this.rootData || {
           isRoot: true,
-          _id: "tree_".concat(this._uid, "_node_root"),
+          _id: `tree_${this._uid}_node_root`,
           children: []
         };
         breadthFirstSearch(data, (node, k, parent) => {
@@ -240,7 +242,7 @@ var script$1 = {
   },
   methods: {
     compeleteNode(node, parent) {
-      var compeletedData = {
+      const compeletedData = {
         open: true,
         children: [],
         active: false,
@@ -252,7 +254,7 @@ var script$1 = {
         innerBackClass: {}
       };
 
-      for (var key in compeletedData) {
+      for (const key in compeletedData) {
         if (!node.hasOwnProperty(key)) {
           this.$set(node, key, compeletedData[key]);
         }
@@ -261,7 +263,7 @@ var script$1 = {
       this.$set(node, 'parent', parent || this.rootData);
 
       if (!node.hasOwnProperty('_id')) {
-        node._id = "tree_".concat(this._uid, "_node_").concat(strRand(this.idLength));
+        node._id = `tree_${this._uid}_node_${strRand(this.idLength)}`;
       }
 
       node._treeNodePropertiesCompleted = true;
@@ -269,7 +271,7 @@ var script$1 = {
 
     // pure node self
     pure(node, withChildren, after) {
-      var t = Object.assign({}, node);
+      const t = Object.assign({}, node);
       delete t._id;
       delete t.parent;
       delete t.children;
@@ -282,7 +284,7 @@ var script$1 = {
       delete t.innerBackStyle;
       delete t.innerBackClass;
 
-      for (var key of Object.keys(t)) {
+      for (const key of Object.keys(t)) {
         if (key[0] === '_') {
           delete t[key];
         }
@@ -303,7 +305,7 @@ var script$1 = {
     },
 
     getNodeById(id) {
-      var r;
+      let r;
       breadthFirstSearch(this.rootData.children, node => {
         if (node._id === id) {
           r = node;
@@ -314,7 +316,7 @@ var script$1 = {
     },
 
     getActivated() {
-      var r = [];
+      const r = [];
       breadthFirstSearch(this.rootData.children, node => {
         if (node.active) {
           r.push(node);
@@ -324,7 +326,7 @@ var script$1 = {
     },
 
     getOpened() {
-      var r = [];
+      const r = [];
       breadthFirstSearch(this.rootData.children, node => {
         if (node.open) {
           r.push(node);
@@ -388,7 +390,7 @@ var script$1 = {
 };
 
 /* script */
-var __vue_script__$1 = script$1;
+const __vue_script__$1 = script$1;
 /* template */
 
 var __vue_render__$1 = function __vue_render__() {
@@ -407,7 +409,7 @@ var __vue_render__$1 = function __vue_render__() {
     },
     scopedSlots: _vm._u([{
       key: "default",
-      fn: function fn(props) {
+      fn: function (props) {
         return [_vm._t("default", null, {
           data: props.data,
           store: _vm.store,
@@ -416,7 +418,7 @@ var __vue_render__$1 = function __vue_render__() {
       }
     }, {
       key: "node-inner-back",
-      fn: function fn(props) {
+      fn: function (props) {
         return _vm.customInnerBack ? [_vm._t("node-inner-back", null, {
           styleObj: props.styleObj,
           data: props.data,
@@ -432,23 +434,23 @@ var __vue_staticRenderFns__$1 = [];
 __vue_render__$1._withStripped = true;
 /* style */
 
-var __vue_inject_styles__$1 = undefined;
+const __vue_inject_styles__$1 = undefined;
 /* scoped */
 
-var __vue_scope_id__$1 = undefined;
+const __vue_scope_id__$1 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$1 = undefined;
+const __vue_module_identifier__$1 = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$1 = false;
+const __vue_is_functional_template__$1 = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$1 = __vue_normalize__({
+const __vue_component__$1 = /*#__PURE__*/__vue_normalize__({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
@@ -484,17 +486,13 @@ class Cache {
 
 }
 function attachCache(obj, cache, toCache) {
-  var _loop = function _loop(key) {
+  for (const key in toCache) {
     Object.defineProperty(obj, key, {
       get() {
         return cache.remember(key, () => toCache[key].call(this));
       }
 
     });
-  };
-
-  for (var key in toCache) {
-    _loop(key);
   }
 }
 
@@ -525,12 +523,12 @@ function elementsFromPoint(x, y) {
 }
 
 function getTreeByPoint(x, y, trees) {
-  var els = document.elementsFromPoint(x, y);
-  var treeEl;
-  var nodeEl;
-  var betweenEls = [];
+  const els = document.elementsFromPoint(x, y);
+  let treeEl;
+  let nodeEl;
+  const betweenEls = [];
 
-  for (var el of els) {
+  for (const el of els) {
     if (!nodeEl) {
       if (hasClass(el, 'tree-node')) {
         nodeEl = el;
@@ -548,12 +546,12 @@ function getTreeByPoint(x, y, trees) {
 
   if (treeEl) {
     // is target tree is another tree, and be covered by other element, like modal, popup
-    var covered = false;
+    let covered = false;
 
     if (!isParent(nodeEl, treeEl)) {
       // cross tree
-      for (var _el of betweenEls) {
-        if (!isParent(_el, treeEl)) {
+      for (const el of betweenEls) {
+        if (!isParent(el, treeEl)) {
           covered = true;
           break;
         }
@@ -568,7 +566,7 @@ function getTreeByPoint(x, y, trees) {
 }
 
 function isParent(child, parent) {
-  var cur = child;
+  let cur = child;
 
   while (cur) {
     cur = cur.parentNode;
@@ -581,7 +579,7 @@ function isParent(child, parent) {
 
 // 对 drag placeholder进行的操作
 
-var targets = {
+const targets = {
   'nothing': info => {},
   'after': info => {
     insertDplhAfterTo(info.dplh, info.targetNode);
@@ -633,7 +631,7 @@ function insertDplhAfterTo(dplh, targetNode, info) {
   if (!targetNode) {
     return false;
   } else {
-    var closest = findParent(targetNode, node => node.parent && isNodeDroppable(node.parent));
+    const closest = findParent(targetNode, node => node.parent && isNodeDroppable(node.parent));
 
     if (closest) {
       insertAfter(dplh, closest);
@@ -646,25 +644,15 @@ function insertDplhAfterTo(dplh, targetNode, info) {
 }
 
 function isNodeDraggable(node) {
-  if (!draggableIds.hasOwnProperty(node._id)) {
-    var r;
-
-    if (node.hasOwnProperty('draggable')) {
-      r = node.draggable;
-    } else if (node.parent) {
-      r = isNodeDraggable(node.parent);
-    } else {
-      r = true;
-    }
-
-    draggableIds[node._id] = r;
+  if (node && node.draggable === false) {
+    return false;
   }
 
-  return draggableIds[node._id];
+  return true;
 }
 function isNodeDroppable(node) {
   if (!droppableIds.hasOwnProperty(node._id)) {
-    var r;
+    let r;
 
     if (node.hasOwnProperty('droppable')) {
       r = node.droppable;
@@ -681,11 +669,11 @@ function isNodeDroppable(node) {
 } // find child, excluding dragging node default
 
 function findChild(info, children, handler, reverse) {
-  var len = children.length;
+  const len = children.length;
 
   if (reverse) {
-    for (var i = len - 1; i >= 0; i--) {
-      var item = children[i]; // excluding dragging node
+    for (let i = len - 1; i >= 0; i--) {
+      const item = children[i]; // excluding dragging node
 
       if (item !== info.node) {
         if (handler(item, i)) {
@@ -694,12 +682,12 @@ function findChild(info, children, handler, reverse) {
       }
     }
   } else {
-    for (var _i = 0; _i < len; _i++) {
-      var _item = children[_i]; // excluding dragging node
+    for (let i = 0; i < len; i++) {
+      const item = children[i]; // excluding dragging node
 
-      if (_item !== info.node) {
-        if (handler(_item, _i)) {
-          return _item;
+      if (item !== info.node) {
+        if (handler(item, i)) {
+          return item;
         }
       }
     }
@@ -708,7 +696,7 @@ function findChild(info, children, handler, reverse) {
 
 
 function findParent(node, handle) {
-  var current = node;
+  let current = node;
 
   while (current) {
     if (handle(current)) {
@@ -719,7 +707,7 @@ function findParent(node, handle) {
   }
 }
 
-var rules = {
+const rules = {
   // 另一节点存在
   'targetNode existed': info => info.targetNode,
   // 另一节点是拖动占位节点
@@ -756,27 +744,20 @@ var rules = {
   'at indent right': info => info.offset.x > info.tiOffset.x + info.currentTree.indent
 }; // convert rule output to Boolean
 
-var _loop = function _loop(key) {
-  var old = rules[key];
+for (const key of Object.keys(rules)) {
+  const old = rules[key];
 
-  rules[key] = function () {
-    return Boolean(old(...arguments));
-  };
-};
-
-for (var key of Object.keys(rules)) {
-  _loop(key);
+  rules[key] = (...args) => Boolean(old(...args));
 }
 
-var prevTree;
-var droppableIds = {};
-var draggableIds = {}; // context is vm
+let prevTree;
+let droppableIds = {};
 
 function autoMoveDragPlaceHolder(draggableHelperInfo) {
-  var trees = this.store.trees;
-  var dhStore = draggableHelperInfo.store; // make info
+  const trees = this.store.trees;
+  const dhStore = draggableHelperInfo.store; // make info
 
-  var info = {
+  const info = {
     event: draggableHelperInfo.event,
     el: dhStore.el,
     vm: this,
@@ -810,7 +791,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
 
     // right bottom point
     offsetToViewPort() {
-      var r = this.nodeInnerEl.getBoundingClientRect();
+      const r = this.nodeInnerEl.getBoundingClientRect();
       r.x = r.left;
       r.y = r.top;
       return r;
@@ -819,10 +800,10 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
     // tree
     currentTree() {
       // const currentTree = trees.find(tree => hp.isOffsetInEl(this.offset.x, this.offset.y, tree.$el))
-      var currentTree = getTreeByPoint(this.offsetToViewPort.x, this.offsetToViewPort.y, trees);
+      const currentTree = getTreeByPoint(this.offsetToViewPort.x, this.offsetToViewPort.y, trees);
 
       if (currentTree) {
-        var dragStartTree = this.store;
+        const dragStartTree = this.store;
 
         if (prevTree == null) {
           prevTree = dragStartTree;
@@ -863,7 +844,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
     },
 
     dplhElInCurrentTree() {
-      return Boolean(this.currentTree.$el.querySelector("#".concat(this.dplh._id)));
+      return Boolean(this.currentTree.$el.querySelector(`#${this.dplh._id}`));
     },
 
     dplhOf4() {
@@ -885,7 +866,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
     // most related node
     // 最相关的另一个节点
     targetNode() {
-      var {
+      const {
         currentTree
       } = this;
 
@@ -894,14 +875,14 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
       } //
 
 
-      var {
+      const {
         x,
         y
       } = this.offset;
-      var currentNode = currentTree.rootData;
+      let currentNode = currentTree.rootData;
 
       while (true) {
-        var children = currentNode.children;
+        let children = currentNode.children;
 
         if (!children) {
           break;
@@ -917,10 +898,10 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
           break;
         }
 
-        var t = binarySearch(children, node => {
-          var el = document.getElementById(node._id);
-          var ty = getOffset(el).y;
-          var ty2 = ty + el.offsetHeight + currentTree.space;
+        const t = binarySearch(children, node => {
+          const el = document.getElementById(node._id);
+          const ty = getOffset(el).y;
+          const ty2 = ty + el.offsetHeight + currentTree.space;
 
           if (ty2 < y) {
             return -1;
@@ -950,8 +931,8 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
           break;
         }
 
-        var innerEl = document.getElementById(currentNode._id).querySelector('.tree-node-inner');
-        var of = getOf4(innerEl, currentTree.space);
+        const innerEl = document.getElementById(currentNode._id).querySelector('.tree-node-inner');
+        const of = getOf4(innerEl, currentTree.space);
 
         if (of.y <= y && y <= of.y2) {
           break;
@@ -985,7 +966,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
     //
     targetPrevEl() {
       // tree node 之间不要有其他元素, 否则这里会获取到错误的元素
-      var r = this.targetNodeEl.previousSibling;
+      let r = this.targetNodeEl.previousSibling;
 
       if (hasClass(r, 'dragging')) {
         r = r.previousSibling;
@@ -995,18 +976,18 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
     },
 
     targetPrev() {
-      var id = this.targetPrevEl.getAttribute('id');
+      const id = this.targetPrevEl.getAttribute('id');
       return this.currentTree.getNodeById(id);
     }
 
   }); // attachCache end
   // decision start =================================
 
-  var executedRuleCache = {}; // exec rule
+  const executedRuleCache = {}; // exec rule
 
-  var exec = ruleId => {
+  const exec = ruleId => {
     if (!executedRuleCache.hasOwnProperty(ruleId)) {
-      var r;
+      let r;
 
       try {
         r = rules[ruleId](info);
@@ -1016,7 +997,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
         try {
           if (process.env.DEVELOPE_SELF) {
             // only visible when develop its self
-            console.warn("failed to execute rule '".concat(ruleId, "'"), e);
+            console.warn(`failed to execute rule '${ruleId}'`, e);
           }
         } catch (e2) {}
       }
@@ -1269,7 +1250,7 @@ function autoMoveDragPlaceHolder(draggableHelperInfo) {
 }
 
 function getOf4(el, space) {
-  var r = getOffset(el);
+  const r = getOffset(el);
   r.x2 = r.x + el.offsetWidth;
   r.y2 = r.y + el.offsetHeight + space;
   return r;
@@ -1280,7 +1261,6 @@ autoMoveDragPlaceHolder.dragStart = function dragStart() {};
 autoMoveDragPlaceHolder.dragEnd = function dragEnd() {
   prevTree = null;
   droppableIds = {};
-  draggableIds = {};
 };
 
 var script$2 = {
@@ -1295,12 +1275,12 @@ var script$2 = {
       return;
     }
 
-    var {
+    const {
       dplh
     } = this.store;
     this.$watch('store.draggable', draggable => {
       if (isPropTrue(draggable)) {
-        var triggerEl = this.store.getTriggerEl ? this.store.getTriggerEl(this) : this.$el.querySelector('.tree-node-inner');
+        const triggerEl = this.store.getTriggerEl ? this.store.getTriggerEl(this) : this.$el.querySelector('.tree-node-inner');
         this._draggableDestroy = draggableHelper(triggerEl, {
           preventSelect: isPropTrue(this.store.preventSelect),
           // trigger el
@@ -1309,7 +1289,7 @@ var script$2 = {
           drag: (e, opt, store) => {
             autoMoveDragPlaceHolder.dragStart(); // this store is not tree
 
-            var draggableHelperInfo = {
+            const draggableHelperInfo = {
               event: e,
               options: opt,
               store
@@ -1325,7 +1305,7 @@ var script$2 = {
 
             this.store.$emit('drag', this.data); // record start positon
 
-            var siblings = this.data.parent.children;
+            const siblings = this.data.parent.children;
             this.startPosition = {
               siblings,
               index: siblings.indexOf(this.data)
@@ -1340,7 +1320,7 @@ var script$2 = {
               return;
             }
 
-            var draggableHelperInfo = {
+            const draggableHelperInfo = {
               event: e,
               options: opt,
               store
@@ -1349,7 +1329,7 @@ var script$2 = {
           },
           drop: (e, opt, store) => {
             autoMoveDragPlaceHolder.dragEnd();
-            var draggableHelperInfo = {
+            const draggableHelperInfo = {
               event: e,
               options: opt,
               store
@@ -1358,16 +1338,16 @@ var script$2 = {
             if (this.store.ondragend && this.store.ondragend(this.data, draggableHelperInfo) === false) {
               arrayRemove(dplh.parent.children, dplh); // can't drop, no change
             } else {
-              var targetTree = dplh._vm.store;
-              var crossTree = targetTree !== this.store;
-              var oldTree = crossTree ? this.store : null;
+              const targetTree = dplh._vm.store;
+              const crossTree = targetTree !== this.store;
+              const oldTree = crossTree ? this.store : null;
               insertAfter(this.data, dplh);
               arrayRemove(dplh.parent.children, dplh);
               this.data.class = this.data.class.replace(/(^| )dragging( |$)/g, ' ');
               targetTree.$emit('drop', this.data, targetTree, oldTree);
               oldTree && oldTree.$emit('drop', this.data, targetTree, oldTree); // emit change event if changed
 
-              var siblings = this.data.parent.children;
+              const siblings = this.data.parent.children;
 
               if (siblings === this.startPosition.siblings && siblings.indexOf(this.data) === this.startPosition.index) ; else {
                 this.store.$emit('change', this.data, targetTree, oldTree);
@@ -1394,33 +1374,33 @@ var script$2 = {
 };
 
 /* script */
-var __vue_script__$2 = script$2;
+const __vue_script__$2 = script$2;
 /* template */
 
 /* style */
 
-var __vue_inject_styles__$2 = undefined;
+const __vue_inject_styles__$2 = undefined;
 /* scoped */
 
-var __vue_scope_id__$2 = undefined;
+const __vue_scope_id__$2 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$2 = undefined;
+const __vue_module_identifier__$2 = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$2 = undefined;
+const __vue_is_functional_template__$2 = undefined;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$2 = __vue_normalize__({}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
+const __vue_component__$2 = /*#__PURE__*/__vue_normalize__({}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
 
-var trees = []; // for multiple trees
+const trees = []; // for multiple trees
 // DragPlaceHolder, unique
 
-var dplh = {
+const dplh = {
   _id: 'draggable_tree_drag_placeHolder',
   level: null,
   droppable: false,
@@ -1482,27 +1462,27 @@ var script$3 = {
 };
 
 /* script */
-var __vue_script__$3 = script$3;
+const __vue_script__$3 = script$3;
 /* template */
 
 /* style */
 
-var __vue_inject_styles__$3 = undefined;
+const __vue_inject_styles__$3 = undefined;
 /* scoped */
 
-var __vue_scope_id__$3 = undefined;
+const __vue_scope_id__$3 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$3 = undefined;
+const __vue_module_identifier__$3 = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$3 = undefined;
+const __vue_is_functional_template__$3 = undefined;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$3 = __vue_normalize__({}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, undefined, undefined);
+const __vue_component__$3 = /*#__PURE__*/__vue_normalize__({}, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, undefined, undefined);
 
 export { __vue_component__$3 as DraggableTree, __vue_component__$2 as DraggableTreeNode, __vue_component__$1 as Tree, __vue_component__ as TreeNode };
